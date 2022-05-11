@@ -12,6 +12,7 @@ contract APIConsumer is ChainlinkClient {
         address finder;
         uint reward;
         uint tweeterNumber;
+        string ipfsHash;
     }
 
     bool public validated;
@@ -80,12 +81,13 @@ contract APIConsumer is ChainlinkClient {
         userRequests[reqId] = userAddresses[keccak256(bytes(_userName))];
         return reqId;
    }
-    function registerPost(uint _postId,uint _reward) public {
+    function registerPost(uint _postId,uint _reward,string memory _ipfsHash) public {
         Post storage post= posts[_postId];
         post.reward = _reward;
         post.author = msg.sender;
         post.tweeters = new address[](10);
         post.tweeterNumber = 0;
+        post.ipfsHash = _ipfsHash;
     }
 
     function getPost(uint _postId) public view returns (Post memory){
